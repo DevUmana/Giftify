@@ -1,0 +1,25 @@
+{
+  "name": "giftify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "cd server && npm run start",
+    "develop": "concurrently \"npm run server:watch\" \"npm run client\"",
+    "install": "cd server && npm install && cd ../client && npm install",
+    "build": "concurrently \"npm run server:build\" \"npm run client:build\"",
+    "render-build": "npm install && npm run build",
+    "server:watch": "cd server && tsc -w",
+    "server:build": "cd server && tsc",
+    "client": "cd client && npm run dev",
+    "client:build": "cd client && npm run build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "devDependencies": {
+    "wait-on": "^7.2.0"
+  }
+}
