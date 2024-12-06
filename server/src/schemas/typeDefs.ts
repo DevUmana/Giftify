@@ -3,13 +3,14 @@ const typeDefs = `
     _id: ID!
     username: String!
     email: String!
+    recipientCount: Int
     recipientList: [Recipient]
   }
 
   type Recipient {
-    recipientId: ID!
     name: String
     gifts: [String]
+    recipientId: ID!
     budget: Float
     status: Boolean
   }
@@ -31,9 +32,9 @@ const typeDefs = `
   }
 
   input AddRecipientInput {
-    recipientId: ID!
     name: String
     gifts: [String]
+    recipientId: ID!
     budget: Float
     status: Boolean
   }
