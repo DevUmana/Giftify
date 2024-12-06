@@ -24,6 +24,7 @@ interface AddRecipientArgs {
   input: {
     name: string;
     gifts: string[];
+    recipientId: string;
     budget: number;
     status: boolean;
   };
