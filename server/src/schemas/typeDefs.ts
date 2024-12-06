@@ -33,7 +33,7 @@ const typeDefs = `
   input AddRecipientInput {
     recipientId: ID!
     name: String
-    gifts: [Gift]
+    gifts: [String]
     budget: Number
     status: Boolean
   }
