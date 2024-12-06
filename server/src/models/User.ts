@@ -32,8 +32,8 @@ const userSchema = new Schema<IUserDocument>(
       type: String,
       required: true,
     },
-    // set recipientList to be an array of data that adheres to the recipienSchema
-    recipientList: [recipienSchema],
+    // set recipientList to be an array of data that adheres to the recipientSchema
+    recipientList: [recipientSchema],
   },
   // set this to use virtual below
   {
