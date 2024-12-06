@@ -3,15 +3,15 @@ const typeDefs = `
     _id: ID!
     username: String!
     email: String!
-    addRecipient: [Recipient]
+    recipientList: [Recipient]
   }
 
   type Recipient {
     recipientId: ID!
     name: String
-    gifts: [Gift]
-    status: Boolean
+    gifts: [String]
     budget: Number
+    status: Boolean
   }
 
   type Auth {
@@ -34,8 +34,8 @@ const typeDefs = `
     recipientId: ID!
     name: String
     gifts: [Gift]
-    status: Boolean
     budget: Number
+    status: Boolean
   }
 
   type Query {
@@ -46,7 +46,7 @@ const typeDefs = `
     addUser(input: NewUserInput!): Auth
     login(input: LoginUserInput!): Auth
     addRecipient(input: AddRecipientInput!): User
-    removeREcipient(recipientId: ID!): User
+    removeRecipient(recipientId: ID!): User
   }
 `;
 
