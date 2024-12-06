@@ -1,4 +1,4 @@
-import { Schema, type Document } from 'mongoose';
+import { Schema, type Document } from "mongoose";
 
 export interface RecipientDocument extends Document {
   recipientId: string;
@@ -18,6 +18,10 @@ const recipientSchema = new Schema<RecipientDocument>({
     type: [String],
     required: true,
   },
+  recipientId: {
+    type: String,
+    required: true,
+  },
   budget: {
     type: Number,
     required: true,
@@ -25,8 +29,7 @@ const recipientSchema = new Schema<RecipientDocument>({
   status: {
     type: Boolean,
     required: true,
-  }
-  
+  },
 });
 
 export default recipientSchema;
