@@ -2,7 +2,7 @@ import { Schema, model, type Document } from "mongoose";
 import bcrypt from "bcrypt";
 
 // import schema from Recipient.js
-import recipienSchema from "./Recipient.js";
+import recipientSchema from "./Recipient.js";
 import type { RecipientDocument } from "./Recipient.js";
 
 export interface IUserDocument extends Document {
