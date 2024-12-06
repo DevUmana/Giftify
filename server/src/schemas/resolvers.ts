@@ -20,19 +20,17 @@ interface LoginUserArgs {
   };
 }
 
-interface SaveBookArgs {
+interface AddRecipientArgs {
   input: {
-    authors: string[];
-    description: string;
-    title: string;
-    bookId: string;
-    image: string;
-    link: string;
+    name: string;
+    gifts: string[];
+    budget: number;
+    status: boolean;
   };
 }
 
-interface RemoveBookArgs {
-  bookId: string;
+interface RemoveRecipientArgs {
+  recipientId: string;
 }
 
 const resolvers = {
@@ -99,9 +97,9 @@ const resolvers = {
         throw new Error("Login failed. Please try again.");
       }
     },
-    saveBook: async (
+    addRecipient: async (
       _parent: unknown,
-      { input }: SaveBookArgs,
+      { input }: AddRecipientArgs,
       context: Context
     ): Promise<IUserDocument | null> => {
       if (!context.user) {
@@ -111,7 +109,7 @@ const resolvers = {
       try {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { savedBooks: input } },
+          { $addToSet: { recipientList: input } },
           { new: true, runValidators: true }
         );
 
@@ -121,13 +119,13 @@ const resolvers = {
 
         return updatedUser;
       } catch (err) {
-        console.error("Error saving book:", err);
-        throw new Error("Failed to save book.");
+        console.error("Error adding recipient:", err);
+        throw new Error("Failed to add recipient.");
       }
     },
-    removeBook: async (
+    removeRecipient: async (
       _parent: unknown,
-      args: RemoveBookArgs,
+      args: RemoveRecipientArgs,
       context: Context
     ): Promise<IUserDocument | null> => {
       if (!context.user) {
@@ -137,7 +135,7 @@ const resolvers = {
       try {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedBooks: { bookId: args.bookId } } },
+          { $pull: { recipientList: { recipientId: args.recipientId } } },
           { new: true }
         );
 
@@ -147,8 +145,8 @@ const resolvers = {
 
         return updatedUser;
       } catch (err) {
-        console.error("Error deleting book:", err);
-        throw new Error("Failed to delete book.");
+        console.error("Error deleting recipient:", err);
+        throw new Error("Failed to delete recipient.");
       }
     },
   },
