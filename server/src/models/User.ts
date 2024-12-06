@@ -1,18 +1,18 @@
 import { Schema, model, type Document } from "mongoose";
 import bcrypt from "bcrypt";
 
-// import schema from Book.js
-import bookSchema from "./Recipient.js";
-import type { BookDocument } from "./Recipient.js";
+// import schema from Recipient.js
+import recipientSchema from "./Recipient.js";
+import type { RecipientDocument } from "./Recipient.js";
 
 export interface IUserDocument extends Document {
   id: string;
   username: string;
   email: string;
   password: string;
-  savedBooks: BookDocument[];
+  recipientList: RecipientDocument[];
   isCorrectPassword(password: string): Promise<boolean>;
-  bookCount: number;
+  recipientCount: number;
 }
 
 const userSchema = new Schema<IUserDocument>(
@@ -32,8 +32,8 @@ const userSchema = new Schema<IUserDocument>(
       type: String,
       required: true,
     },
-    // set savedBooks to be an array of data that adheres to the bookSchema
-    savedBooks: [bookSchema],
+    // set recipientList to be an array of data that adheres to the recipienSchema
+    recipientList: [recipienSchema],
   },
   // set this to use virtual below
   {
@@ -58,9 +58,9 @@ userSchema.methods.isCorrectPassword = async function (password: string) {
   return await bcrypt.compare(password, this.password);
 };
 
-// when we query a user, we'll also get another field called `bookCount` with the number of saved books we have
-userSchema.virtual("bookCount").get(function () {
-  return this.savedBooks.length;
+// when we query a user, we'll also get another field called `recipientCount` with the number of saved recipient we have
+userSchema.virtual("recipientCount").get(function () {
+  return this.recipientList.length;
 });
 
 const User = model<IUserDocument>("User", userSchema);
