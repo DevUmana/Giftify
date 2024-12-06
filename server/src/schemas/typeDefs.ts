@@ -10,7 +10,7 @@ const typeDefs = `
     recipientId: ID!
     name: String
     gifts: [String]
-    budget: Number
+    budget: Float
     status: Boolean
   }
 
@@ -34,7 +34,7 @@ const typeDefs = `
     recipientId: ID!
     name: String
     gifts: [String]
-    budget: Number
+    budget: Float
     status: Boolean
   }
 
