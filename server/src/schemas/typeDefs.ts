@@ -3,17 +3,15 @@ const typeDefs = `
     _id: ID!
     username: String!
     email: String!
-    bookCount: Int!
-    savedBooks: [Book]
+    recipientList: [Recipient]
   }
 
-  type Book {
-    bookId: ID!
-    authors: [String]
-    description: String
-    title: String!
-    image: String
-    link: String
+  type Recipient {
+    recipientId: ID!
+    name: String
+    gifts: [String]
+    budget: Number
+    status: Boolean
   }
 
   type Auth {
@@ -32,13 +30,12 @@ const typeDefs = `
     password: String!
   }
 
-  input SavedBookInput {
-    bookId: ID!
-    authors: [String]
-    description: String
-    title: String!
-    image: String
-    link: String
+  input AddRecipientInput {
+    recipientId: ID!
+    name: String
+    gifts: [String]
+    budget: Number
+    status: Boolean
   }
 
   type Query {
@@ -48,8 +45,8 @@ const typeDefs = `
   type Mutation {
     addUser(input: NewUserInput!): Auth
     login(input: LoginUserInput!): Auth
-    saveBook(input: SavedBookInput!): User
-    removeBook(bookId: ID!): User
+    addRecipient(input: AddRecipientInput!): User
+    removeRecipient(recipientId: ID!): User
   }
 `;
 
