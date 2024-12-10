@@ -59,6 +59,3 @@ return (
 };
 
 export default Table;
-
-
-
