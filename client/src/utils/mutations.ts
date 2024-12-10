@@ -8,7 +8,7 @@ export const ADD_USER = gql`
         _id
         username
         email
-        bookCount
+        recipientCount
       }
     }
   }
@@ -22,45 +22,43 @@ export const LOGIN_USER = gql`
         _id
         username
         email
-        bookCount
+        recipientCount
       }
     }
   }
 `;
 
-export const SAVE_BOOK = gql`
-  mutation saveBook($input: SavedBookInput!) {
-    saveBook(input: $input) {
+export const ADD_RECIPIENT = gql`
+  mutation addRecipient($input: AddRecipientInput!) {
+    addRecipient(input: $input) {
       _id
       username
       email
-      bookCount
-      savedBooks {
-        bookId
-        authors
-        description
-        title
-        image
-        link
+      recipientCount
+      recipientList {
+        name
+        gifts
+        recipientId
+        budget
+        status
       }
     }
   }
 `;
 
-export const REMOVE_BOOK = gql`
-  mutation removeBook($bookId: ID!) {
-    removeBook(bookId: $bookId) {
+export const REMOVE_RECIPIENT = gql`
+  mutation removeRecipient($recipientId: ID!) {
+    removeRecipient(recipientId: $recipientId) {
       _id
       username
       email
-      bookCount
-      savedBooks {
-        bookId
-        authors
-        description
-        title
-        image
-        link
+      recipientCount
+      recipientList {
+        name
+        gifts
+        recipientId
+        budget
+        status
       }
     }
   }
