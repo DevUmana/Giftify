@@ -6,15 +6,32 @@ export const GET_ME = gql`
       _id
       username
       email
-      bookCount
-      savedBooks {
-        bookId
-        authors
-        description
-        title
-        image
-        link
+      recipientCount
+      recipientList {
+        name
+        gifts
+        recipientId
+        budget
+        status
       }
     }
   }
 `;
+
+// export interface IUserDocument extends Document {
+//  id: string;
+ // username: string;
+ // email: string;
+ // password: string;
+ // recipientList: RecipientDocument[];
+ // isCorrectPassword(password: string): Promise<boolean>;
+ // recipientCount: number;
+//}
+
+// export interface RecipientDocument extends Document {
+// name: string;
+// gifts: string[];
+// recipientId: string;
+// budget: number;
+// status: boolean;
+//}
