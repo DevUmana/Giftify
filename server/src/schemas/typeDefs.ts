@@ -39,6 +39,15 @@ const typeDefs = `
     status: Boolean
   }
 
+  input RecipientInput {
+    name: String!
+    giftIdeas: [String]
+    recipientId: ID!
+    age: Int!
+    gender: String!
+    budget: Float!
+  }
+
   type Query {
     me: User
   }
@@ -48,6 +57,7 @@ const typeDefs = `
     login(input: LoginUserInput!): Auth
     addRecipient(input: AddRecipientInput!): User
     removeRecipient(recipientId: ID!): User
+    openAIResponse(input: [RecipientInput]!): [String]!
   }
 `;
 
