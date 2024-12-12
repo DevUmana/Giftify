@@ -13,6 +13,7 @@ on:
 jobs:
   test:
     # This job runs on the latest version of the Ubuntu operating system.
+    name: Lint and Build Workflow
     runs-on: ubuntu-latest
 
     # This is the list of steps that the job runs.
