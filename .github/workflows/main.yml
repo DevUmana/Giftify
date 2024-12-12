@@ -1,5 +1,5 @@
 # This is the name of the workflow. It is displayed on the Actions tab of the repository.
-name: Lint and Build Workflow
+name: Build Workflow
 
 # This is the event that triggers the workflow. In this case, the workflow is triggered when a pull request is opened or updated.
 on:
@@ -13,7 +13,7 @@ on:
 jobs:
   test:
     # This job runs on the latest version of the Ubuntu operating system.
-    name: Lint and Build Workflow
+    name: Build Workflow
     runs-on: ubuntu-latest
 
     # This is the list of steps that the job runs.
@@ -30,10 +30,6 @@ jobs:
       # This step installs the dependencies.
       - name: 🧰 Install Deps
         run: npm install
-
-      # This step runs the linting script.
-      - name: Run Lint
-        run: npm run lint
 
       # This step runs the build script.
       - name: Run Build

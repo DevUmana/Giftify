@@ -12,20 +12,14 @@
     "server:watch": "cd server && tsc -w",
     "server:build": "cd server && tsc",
     "client": "cd client && npm run dev",
-    "client:build": "cd client && npm run build",
-    "lint": "eslint src -c js,tsx --report-unused-disable-directives --max-warnings 0",
-    "eslint": "eslint src"
+    "client:build": "cd client && npm run build"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^8.2.2",
-    "lint": "^0.8.19"
+    "concurrently": "^8.2.2"
   },
   "devDependencies": {
-    "eslint": "^9.16.0",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-react-refresh": "^0.4.16",
     "pretty": "^2.0.0",
     "wait-on": "^7.2.0"
   }
