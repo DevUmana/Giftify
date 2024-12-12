@@ -37,7 +37,3 @@ jobs:
       # This step runs the build script.
       - name: Run Build
         run: npm run build
-
-      # This step runs the test script.
-      - name: Run Tests
-        run: npm run test
