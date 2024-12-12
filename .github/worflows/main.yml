@@ -1,0 +1,39 @@
+# This is the name of the workflow. It is displayed on the Actions tab of the repository.
+name: Lint and Build Workflow
+
+# This is the event that triggers the workflow. In this case, the workflow is triggered when a pull request is opened or updated.
+on:
+  pull_request:
+    branches:
+      - develop
+      - staging
+      - main
+
+# This is the job that the workflow runs. The job is named test.
+jobs:
+  test:
+    # This job runs on the latest version of the Ubuntu operating system.
+    runs-on: ubuntu-latest
+
+    # This is the list of steps that the job runs.
+    steps:
+      # This step checks out the code from the repository.
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Use Node.js 21.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 21.x
+
+      # This step installs the dependencies.
+      - name: 🧰 Install Deps
+        run: npm install
+
+      # This step runs the linting script.
+      - name: Run Lint
+        run: npm run lint
+
+      # This step runs the build script.
+      - name: Run Build
+        run: npm run build
