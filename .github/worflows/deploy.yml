@@ -4,9 +4,11 @@ name: deploy
 #This is the event that triggers the workflow. In this case, the workflow is triggered when a push event occurs on the main branch or when a pull request is opened or updated.
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - main
   pull_request:
-    branches: [ main ]
+    branches: 
+      - main
 
   
 #This is the job that the workflow runs. The job is named ci.
