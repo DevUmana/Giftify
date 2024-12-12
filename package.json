@@ -13,7 +13,7 @@
     "server:build": "cd server && tsc",
     "client": "cd client && npm run dev",
     "client:build": "cd client && npm run build",
-    "lint": "eslint src --ext js,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint src -c js,tsx --report-unused-disable-directives --max-warnings 0",
     "eslint": "eslint src"
   },
   "author": "",
