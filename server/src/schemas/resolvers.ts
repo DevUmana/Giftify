@@ -1,5 +1,6 @@
 import User, { IUserDocument } from "../models/User.js";
 import { signToken, AuthenticationError } from "../services/auth.js";
+import { promptFunc } from "../services/openAI.js";
 
 interface Context {
   user?: IUserDocument | null;
@@ -28,6 +29,17 @@ interface AddRecipientArgs {
     budget: number;
     status: boolean;
   };
+}
+
+interface OpenAIResponseArgs {
+  input: Array<{
+    name: string;
+    giftIdeas?: string[];
+    recipientId: string;
+    age: number;
+    gender: string;
+    budget: number;
+  }>;
 }
 
 interface RemoveRecipientArgs {
@@ -148,6 +160,21 @@ const resolvers = {
       } catch (err) {
         console.error("Error deleting recipient:", err);
         throw new Error("Failed to delete recipient.");
+      }
+    },
+    openAIResponse: async (
+      _parent: unknown,
+      { input }: OpenAIResponseArgs
+    ): Promise<string[]> => {
+      try {
+        // Call promptFunc with the array of recipients
+        const responses = await promptFunc(input);
+        return responses;
+      } catch (err) {
+        console.error("Error getting OpenAI response:", err);
+        throw new Error(
+          `Failed to get OpenAI responses: ${(err as Error).message}`
+        );
       }
     },
   },
