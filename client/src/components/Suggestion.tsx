@@ -42,7 +42,7 @@ const Suggestion: React.FC<{
       <button onClick={handleOpenAi} className="btn" disabled={loading}>
         Get Gift Suggestions
       </button>
-      {loading && <p>Loading...</p>}
+      {loading && <p>Thinking...</p>}
       {data && (
         <div className="suggestion-data">
           {handleDataFormat(data.openAIResponse)}
