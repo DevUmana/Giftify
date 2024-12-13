@@ -46,6 +46,12 @@ export const ADD_RECIPIENT = gql`
   }
 `;
 
+export const OPEN_AI_RESPONSE = gql`
+  mutation openAIResponse($input: [RecipientInput]!) {
+    openAIResponse(input: $input)
+  }
+`;
+
 export const REMOVE_RECIPIENT = gql`
   mutation removeRecipient($recipientId: ID!) {
     removeRecipient(recipientId: $recipientId) {
