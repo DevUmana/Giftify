@@ -5,8 +5,7 @@ import type { Recipient } from "../models/Recipient";
 const Suggestion: React.FC<{
   recipientList: Recipient[];
 }> = ({ recipientList }) => {
-  const [openAiResponse, { loading, error, data }] =
-    useMutation(OPEN_AI_RESPONSE);
+  const [openAiResponse, { loading, data }] = useMutation(OPEN_AI_RESPONSE);
 
   const handleOpenAi = async () => {
     // Transform recipientList to match the RecipientInput type
