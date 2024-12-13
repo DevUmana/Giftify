@@ -41,11 +41,9 @@ const typeDefs = `
 
   input RecipientInput {
     name: String!
-    giftIdeas: [String]
-    recipientId: ID!
-    age: Int!
-    gender: String!
+    gifts: [String]
     budget: Float!
+    status: Boolean
   }
 
   type Query {

@@ -28,43 +28,48 @@ const model = new OpenAI({
 export const promptFunc = async (
   recipients: {
     name: string;
-    giftIdeas?: string[];
-    age: number;
-    recipientId: string;
-    gender: string;
+    gifts?: string[];
     budget: number;
+    status: boolean;
   }[]
 ): Promise<string[]> => {
   try {
     const suggestions: string[] = [];
 
-    const intro = `ho ho ho! Greetings from the North Pole! Santa here, ready to help you find the perfect gifts for your loved ones. 🎅🎁`;
-
     // Process each recipient in the array
     for (const recipient of recipients) {
-      // Construct a meaningful prompt for the OpenAI model
+      if (!recipient.name || !recipient.budget) {
+        throw new Error("Recipient name and budget are required.");
+      }
 
+      // skip recipients with status set to true
+      if (recipient.status) {
+        continue;
+      }
+      // Construct a meaningful prompt for the OpenAI model
       const prompt = `
-      You are an expert in personalized gift recommendations. Based on the following details, suggest thoughtful and creative gift ideas. Keep the response short, concise, and plain text only.
+      You are an expert in personalized gift recommendations. Using the details provided below, recommend three thoughtful and creative gift ideas. Base your recommendations strictly on the recipient's provided gift ideas or interests. Avoid adding unrelated suggestions.
       
       Recipient Details:
       - Name: ${recipient.name}
-      - Age: ${recipient.age}
-      - Gender: ${recipient.gender}
       - Budget: $${recipient.budget}
-      - Pre-existing Gift Ideas: ${recipient.giftIdeas?.join(", ") || "None"}
+      - Gift Ideas or Interests: ${recipient.gifts?.join(", ") || "None"}
       
-      Provide 3 thoughtful gift ideas tailored to the recipient's details. Start each suggestion with:
-      "Gift Idea for ${recipient.name}:".
+      Guidelines for the response:
+      - The suggestions must align closely with the recipient's provided gift ideas or interests.
+      - Consider the budget when suggesting items.
+      - Include a header "Gift Ideas for [Recipient's Name]:" before listing the suggestions.
+      - The response should  plain text only, and formatted as a single sentence listing the three ideas, separated by commas.
+      - Do not include suggestions unrelated to the gift ideas or interests provided.
+      
+      Provide your response as a single plain text sentence.
       `;
 
       const output = await model.invoke(prompt);
       suggestions.push(output.trim());
     }
 
-    const outro = `I hope you found these suggestions helpful! If you need more ideas, just let me know. Happy holidays! 🎄🎁 `;
-
-    const response = [intro, ...suggestions, outro];
+    const response = suggestions.map((suggestion) => suggestion);
 
     return response; // Return all suggestions as an array
   } catch (err) {
