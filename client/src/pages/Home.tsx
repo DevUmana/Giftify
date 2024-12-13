@@ -5,6 +5,8 @@ import type { FormEvent } from "react";
 import Auth from "../utils/auth";
 import { ADD_RECIPIENT, REMOVE_RECIPIENT } from "../utils/mutations";
 import { GET_ME } from "../utils/queries";
+
+import Suggestion from "../components/Suggestion";
 import Table from "../components/Table";
 
 import type { Recipient } from "../models/Recipient";
@@ -140,6 +142,7 @@ const Home = () => {
               <Table data={recipientList} onRemove={handleRemoveRecipient} />
             </div>
           </div>
+          <Suggestion recipientList={recipientList} />
         </>
       ) : (
         <div className="container">

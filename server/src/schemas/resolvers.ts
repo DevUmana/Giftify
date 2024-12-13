@@ -34,11 +34,9 @@ interface AddRecipientArgs {
 interface OpenAIResponseArgs {
   input: Array<{
     name: string;
-    giftIdeas?: string[];
-    recipientId: string;
-    age: number;
-    gender: string;
+    gifts?: string[];
     budget: number;
+    status: boolean;
   }>;
 }
 
