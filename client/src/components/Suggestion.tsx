@@ -30,30 +30,22 @@ const Suggestion: React.FC<{
   };
 
   const handleDataFormat = (data: string[]) => {
-    return data.map((suggestion, index) => <p key={index}>{suggestion}</p>);
+    return data.map((suggestion, index) => (
+      <p className="ideas" key={index}>
+        {suggestion}
+      </p>
+    ));
   };
 
   return (
-    <div>
-      {loading && <p>Loading...</p>}
-      <button
-        onClick={handleOpenAi}
-        className="btn btn-primary"
-        disabled={loading}
-      >
+    <div className="suggestion">
+      <button onClick={handleOpenAi} className="btn" disabled={loading}>
         Get Gift Suggestions
       </button>
+      {loading && <p>Loading...</p>}
       {data && (
-        <div>
-          <p>
-            ho ho ho! Greetings from the North Pole! Santa here, ready to help
-            you find the perfect gifts for your loved ones. 🎅🎁
-          </p>
+        <div className="suggestion-data">
           {handleDataFormat(data.openAIResponse)}
-          <p>
-            I hope you found these suggestions helpful! If you need more ideas,
-            just let me know. Happy holidays! 🎄🎁
-          </p>
         </div>
       )}
     </div>
