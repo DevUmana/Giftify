@@ -11,6 +11,7 @@ import Table from "../components/Table";
 
 import type { Recipient } from "../models/Recipient";
 import { v4 as uuidv4 } from "uuid";
+import "../assets/Home.css";
 
 const Home = () => {
   // Local state hooks for form inputs and recipient list
@@ -88,59 +89,65 @@ const Home = () => {
   return (
     <>
       {Auth.loggedIn() ? (
-        <div className="container">
-          <h1 className="display-2">Add Recipient</h1>
-          <form onSubmit={handleFormSubmit}>
-            <div className="mb-3">
-              <label htmlFor="recipientName" className="form-label">
-                Recipient Name
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="recipientName"
-                value={recipientName}
-                onChange={(e) => setRecipientName(e.target.value)}
-                placeholder="Enter a name"
-              />
+        <>
+          <div className="container">
+            <div className="section-1">
+              <h1 className="display-2" id="add-recipient">Add Recipient</h1>
+              <form onSubmit={handleFormSubmit}>
+                <div className="mb-3">
+                  <label htmlFor="recipientName" className="form-label">
+                    Recipient Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="recipientName"
+                    value={recipientName}
+                    onChange={(e) => setRecipientName(e.target.value)}
+                    placeholder="Enter a name"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="budget" className="form-label">
+                    Budget
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="budget"
+                    value={budget}
+                    onChange={(e) => setBudget(e.target.value)}
+                    placeholder="Enter a budget"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="gifts" className="form-label">
+                    Gift Ideas
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="gifts"
+                    value={gifts}
+                    onChange={(e) => setGifts(e.target.value)}
+                    placeholder="Enter gift ideas"
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary">
+                  Add Recipient
+                </button>
+              </form>
             </div>
-            <div className="mb-3">
-              <label htmlFor="budget" className="form-label">
-                Budget
-              </label>
-              <input
-                type="number"
-                className="form-control"
-                id="budget"
-                value={budget}
-                onChange={(e) => setBudget(e.target.value)}
-                placeholder="Enter a budget"
-              />
+            <div className="section-2">
+              <Table data={recipientList} onRemove={handleRemoveRecipient} />
             </div>
-            <div className="mb-3">
-              <label htmlFor="gifts" className="form-label">
-                Gift Ideas
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="gifts"
-                value={gifts}
-                onChange={(e) => setGifts(e.target.value)}
-                placeholder="Enter gift ideas"
-              />
-            </div>
-            <button type="submit" className="btn btn-primary">
-              Add Recipient
-            </button>
-          </form>
-          <Table data={recipientList} onRemove={handleRemoveRecipient} />
+          </div>
           <Suggestion recipientList={recipientList} />
-        </div>
+        </>
       ) : (
         <div className="container">
           <h1 className="display-2">Welcome to Giftify!</h1>
-          <p className="lead">Login to start</p>
+          <p className="lead">Login to start planning!</p>
         </div>
       )}
     </>
