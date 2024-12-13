@@ -1,5 +1,14 @@
+:root {
+  --red: #dc8281;
+  --dark-red: #a33f1f;
+  --green: #a8c77f;
+  --dark-green: #5f8c3b;
+  --gold: #f0d279;
+  --dark-gold: #bfaa3f;
+}
+
 body {
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 
 h1,
@@ -8,10 +17,222 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Rubik Mono One', sans-serif;
+  font-family: "Rubik Mono One", sans-serif;
 }
 
 .small {
   font-weight: 300;
   font-style: italic;
+}
+
+/* Button styling */
+
+.btn {
+  /* Box Model */
+  margin-top: 20px;
+  padding: 8px 12px;
+  border: none;
+
+  /* Visual Styles */
+  background-color: var(--green);
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+
+  /* Interaction */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: var(--dark-red);
+}
+
+/* HOME CSS */
+
+* {
+  background-color: var(--red);
+  color: white;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.section-1 {
+  width: 50%;
+}
+
+.section-2 {
+  width: 50%;
+  margin-top: 25px;
+}
+
+h1 {
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.lead {
+  font-size: 32px;
+  font-weight: bold;
+  margin-top: 10rem;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.form-label {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* TABLE CSS */
+
+/* Container for the table and the bow */
+.table-container {
+  position: relative;
+  width: 100%;
+  margin-top: 0px; /* Space for the bow */
+  text-align: center; /* Center-align the bow */
+}
+
+/* Bow container */
+.gift-bow {
+  margin-bottom: -50px; /* Increased space to lower the bow */
+}
+
+/* Bow image styling */
+.bow-image {
+  width: 100px; /* Increased width to stretch the image */
+  height: 0px;
+  height: auto;
+}
+
+/* Table Styling */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--green);
+  border: 5px solid var(--red);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+/* Header Styling */
+.table th {
+  background-color: var(--red);
+  color: var(--gold);
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 5px solid var(--gold);
+}
+
+/* Body Row Styling */
+.table tbody tr {
+  background-color: var(--green);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #d9e7c3;
+}
+
+/* Cell Styling */
+.table td {
+  padding: 12px 16px;
+  border-right: 1px solid var(--red);
+  word-wrap: break-word;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table td .btn {
+  margin: 0;
+}
+
+.table td:last-child {
+  border-right: none;
+}
+
+.table td:nth-child(4) {
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Status Class Styling */
+.table td .status {
+  text-align: center;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: var(--gold);
+  color: var(--red);
+}
+
+/* Styling for status column */
+.table .status.wrapped {
+  color: var(--dark-green);
+}
+
+.table .status.missing {
+  color: var(--dark-red);
+  background-color: #fff;
+}
+
+/* Empty state styling */
+.text-center {
+  text-align: center;
+  font-style: italic;
+  color: #777;
+  padding: 20px 0;
+}
+
+/* SUGGESTION CSS */
+
+.section-3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 60px;
+}
+
+.suggestion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+}
+
+.suggestion .btn {
+  margin-bottom: 20px;
+}
+
+.ideas {
+  border-radius: 10px;
+  border: 5px solid var(--green);
+  padding: 20px;
+}
+
+.suggestion p {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: left;
 }

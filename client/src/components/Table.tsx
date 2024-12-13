@@ -1,6 +1,5 @@
 import type { Recipient } from "../models/Recipient";
-import '../Table.css';
-import bowImage from '../assets/bow.png';
+import bowImage from "../assets/bow.png";
 
 const Table: React.FC<{
   data: Recipient[];
@@ -10,7 +9,7 @@ const Table: React.FC<{
   return (
     <div className="table-container">
       <div className="gift-bow">
-      <img src={bowImage} alt="Gift Bow" className="bow-image" />
+        <img src={bowImage} alt="Gift Bow" className="bow-image" />
       </div>
       <table className="table" role="table">
         <thead>
@@ -28,8 +27,12 @@ const Table: React.FC<{
               <tr key={recipient.recipientId}>
                 <td>{recipient.name}</td>
                 <td>{recipient.gifts.join(", ")}</td>
-                <td>{recipient.budget}</td>
-                <td className={`status ${recipient.status ? "wrapped" : "missing"}`}>
+                <td>${recipient.budget}</td>
+                <td
+                  className={`status ${
+                    recipient.status ? "wrapped" : "missing"
+                  }`}
+                >
                   {recipient.status ? "Wrapped" : "Missing Gift"}
                 </td>
                 <td>
@@ -57,7 +60,3 @@ const Table: React.FC<{
 };
 
 export default Table;
-
-
-
-
