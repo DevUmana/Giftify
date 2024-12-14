@@ -8,9 +8,9 @@ const typeDefs = `
   }
 
   type Recipient {
+    recipientId: ID!
     name: String
     gifts: [String]
-    recipientId: ID!
     budget: Float
     status: Boolean
   }
@@ -32,17 +32,25 @@ const typeDefs = `
   }
 
   input AddRecipientInput {
+    recipientId: ID! 
     name: String
     gifts: [String]
-    recipientId: ID!
     budget: Float
     status: Boolean
   }
 
   input RecipientInput {
-    name: String!
+    name: String! 
     gifts: [String]
     budget: Float!
+    status: Boolean
+  }
+
+  input UpdateRecipientInput {
+    recipientId: ID! 
+    name: String
+    gifts: [String]
+    budget: Float
     status: Boolean
   }
 
@@ -55,7 +63,8 @@ const typeDefs = `
     login(input: LoginUserInput!): Auth
     addRecipient(input: AddRecipientInput!): User
     removeRecipient(recipientId: ID!): User
-    openAIResponse(input: [RecipientInput]!): [String]!
+    openAIResponse(input: [RecipientInput]!): [String]! 
+    updateRecipientStatus(input: UpdateRecipientInput!): User 
   }
 `;
 
