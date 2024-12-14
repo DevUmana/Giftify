@@ -1,12 +1,13 @@
+/* VARIABLES */
 :root {
   --red: #dc8281;
   --dark-red: #a33f1f;
   --green: #a8c77f;
   --dark-green: #5f8c3b;
   --gold: #f0d279;
-  --dark-gold: #bfaa3f;
 }
 
+/* GLOBAL STYLES */
 body {
   font-family: "Rubik", sans-serif;
   background-color: var(--red);
@@ -22,36 +23,91 @@ h6 {
   font-family: "Rubik Mono One", sans-serif;
 }
 
+h1 {
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: center;
+}
+
 .small {
   font-weight: 300;
   font-style: italic;
 }
 
-/* Button styling */
+/* NAVIGATION */
+.navbar {
+  height: 80px;
+}
 
+.navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#navbar-link {
+  font-size: 24px;
+  color: #fff;
+}
+
+#navbar-link:hover {
+  color: var(--dark-green);
+}
+
+.nav-item {
+  --bs-nav-pills-link-active-bg: var(--green);
+}
+
+.nav-link {
+  color: #fff;
+}
+
+.nav-link:hover {
+  color: var(--dark-green);
+}
+
+.bg-dark {
+  background-color: var(--red) !important;
+}
+
+/* BUTTON STYLING */
 .btn {
-  /* Box Model */
   margin-top: 20px;
   padding: 8px 12px;
   border: none;
-
-  /* Visual Styles */
   background-color: var(--green);
   color: #fff;
   font-size: 20px;
   font-weight: bold;
-
-  /* Interaction */
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
+.btn:active,
 .btn:hover {
-  background-color: var(--dark-green);
+  background-color: var(--dark-green) !important;
 }
 
-/* HOME CSS */
+.btn:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
 
+/* FORMS */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.form-label {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* HOME PAGE */
 .container {
   display: flex;
   flex-direction: row;
@@ -69,12 +125,6 @@ h6 {
   margin-top: 25px;
 }
 
-h1 {
-  font-weight: bold;
-  margin-top: 20px;
-  text-align: center;
-}
-
 .lead {
   font-size: 32px;
   font-weight: bold;
@@ -82,42 +132,23 @@ h1 {
   text-align: center;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px;
-}
-
-.form-label {
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-/* TABLE CSS */
-
-/* Container for the table and the bow */
+/* TABLE */
 .table-container {
   position: relative;
   width: 100%;
-  margin-top: 0px; /* Space for the bow */
-  text-align: center; /* Center-align the bow */
+  margin-top: 0px;
+  text-align: center;
 }
 
-/* Bow container */
 .gift-bow {
-  margin-bottom: -50px; /* Increased space to lower the bow */
+  margin-bottom: -50px;
 }
 
-/* Bow image styling */
 .bow-image {
-  width: 100px; /* Increased width to stretch the image */
-  height: 0px;
+  width: 100px;
   height: auto;
 }
 
-/* Table Styling */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -128,7 +159,6 @@ form {
   margin-top: 20px;
 }
 
-/* Header Styling */
 .table th {
   background-color: var(--red);
   color: var(--gold);
@@ -139,7 +169,6 @@ form {
   border-bottom: 5px solid var(--gold);
 }
 
-/* Body Row Styling */
 .table tbody tr {
   background-color: var(--green);
   transition: background-color 0.3s ease, transform 0.2s ease;
@@ -149,17 +178,12 @@ form {
   background-color: #d9e7c3;
 }
 
-/* Cell Styling */
 .table td {
   padding: 12px 16px;
   border-right: 1px solid var(--red);
   word-wrap: break-word;
   text-align: center;
   vertical-align: middle;
-}
-
-.table td .btn {
-  margin: 0;
 }
 
 .table td:last-child {
@@ -171,7 +195,10 @@ form {
   font-weight: bold;
 }
 
-/* Status Class Styling */
+.table td .btn {
+  margin: 0;
+}
+
 .table td .status {
   text-align: center;
   font-weight: bold;
@@ -181,7 +208,6 @@ form {
   color: var(--red);
 }
 
-/* Styling for status column */
 .table .status.wrapped {
   color: var(--dark-green);
 }
@@ -191,7 +217,6 @@ form {
   background-color: #fff;
 }
 
-/* Empty state styling */
 .text-center {
   text-align: center;
   font-style: italic;
@@ -199,8 +224,35 @@ form {
   padding: 20px 0;
 }
 
-/* SUGGESTION CSS */
+.table-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #fff;
+}
 
+.table-info p {
+  display: flex;
+  align-items: center;
+}
+
+#totalBudget {
+  color: var(--dark-green);
+  font-size: 30px;
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+#daysLeft {
+  color: var(--dark-red);
+  font-size: 30px;
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+/* SUGGESTIONS */
 .section-3 {
   display: flex;
   flex-direction: column;
@@ -225,6 +277,7 @@ form {
   border-radius: 10px;
   border: 5px solid var(--green);
   padding: 20px;
+  background-color: var(--green);
 }
 
 .suggestion p {
@@ -234,32 +287,7 @@ form {
   text-align: left;
 }
 
-/* NAV */
-
-.navbar {
-  height: 80px;
-}
-
-.navbar-brand {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-#navbar-link {
-  font-size: 24px;
-  color: #fff;
-}
-
-#navbar-link:hover {
-  color: var(--dark-green);
-}
-
-.bg-dark {
-  background-color: rgba(var(--red), var(--bs-bg-opacity)) !important;
-}
-
-/* MODAL DIALOG */
-
+/* MODAL */
 .modal-content {
   background-color: var(--red);
   border: 2px solid var(--green);
@@ -270,20 +298,99 @@ form {
   border-bottom: 2px solid var(--green);
 }
 
-.nav-item {
-  --bs-nav-pills-link-active-bg: var(--green);
+/* ALERTS */
+.alert {
+  margin-bottom: 10px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1050;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
 }
 
-.nav-link {
-  color: #fff;
+/* MEDIA */
+
+@media screen and (max-width: 1310px) {
+  .table-info {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
-.nav-link:hover {
-  color: var(--dark-green);
+@media screen and (max-width: 1075px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .section-1,
+  .section-2 {
+    width: 100%;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .table {
+    width: 100%;
+  }
+
+  .table td {
+    padding: 8px 12px;
+  }
+
+  .table th {
+    padding: 8px 12px;
+  }
+
+  .suggestion {
+    width: 80%;
+  }
 }
 
-.btn:disabled {
-  background-color: #ccc;
-  color: #666;
-  cursor: not-allowed;
+@media screen and (max-width: 992px) {
+  .navbar-collapse {
+    flex-basis: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .section-1,
+  .section-2 {
+    width: 100%;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .table {
+    width: 100%;
+  }
+
+  .table td {
+    padding: 8px 12px;
+  }
+
+  .table th {
+    padding: 8px 12px;
+  }
+
+  .table-info {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .table-info p {
+    margin-bottom: 10px;
+  }
 }

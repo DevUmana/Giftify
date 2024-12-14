@@ -17,7 +17,6 @@ const AppNavbar = () => {
           <Navbar.Brand as={Link} to="/">
             Giftify
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbar" />
           <Navbar.Collapse id="navbar" className="d-flex flex-row-reverse">
             <Nav className="ml-auto d-flex">
               {/* if user is logged in show saved books and logout */}

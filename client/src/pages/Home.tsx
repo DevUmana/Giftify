@@ -13,32 +13,41 @@ import type { Recipient } from "../models/Recipient";
 import { v4 as uuidv4 } from "uuid";
 
 const Home = () => {
-  // Local state hooks for form inputs and recipient list
   const [recipientList, setRecipientList] = useState<Recipient[]>([]);
   const [recipientName, setRecipientName] = useState<string>("");
   const [budget, setBudget] = useState<string>("");
   const [gifts, setGifts] = useState<string>("");
+  const [alert, setAlert] = useState<{ message: string; type: string } | null>(
+    null
+  );
 
-  // Query and mutation hooks
   const [removeRecipient] = useMutation(REMOVE_RECIPIENT);
   const [addRecipient] = useMutation(ADD_RECIPIENT);
   const { data, loading } = useQuery(GET_ME);
 
-  // Update recipientList when data changes
   useEffect(() => {
     if (data?.me?.recipientList) {
       setRecipientList(data.me.recipientList);
     }
   }, [data]);
 
-  // Handle form submission
+  // Automatically hide alert after 3 seconds
+  useEffect(() => {
+    if (alert) {
+      const timer = setTimeout(() => setAlert(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [alert]);
+
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Validate recipient name and budget
     const parsedBudget = parseFloat(budget);
     if (!recipientName || isNaN(parsedBudget) || parsedBudget <= 0) {
-      alert("Please provide valid recipient details.");
+      setAlert({
+        message: "Please provide valid recipient details.",
+        type: "danger",
+      });
       return;
     }
 
@@ -60,14 +69,17 @@ const Home = () => {
         setRecipientName("");
         setBudget("");
         setGifts("");
+        setAlert({ message: "Recipient added successfully!", type: "success" });
       }
     } catch (err) {
       console.error("Error adding recipient:", err);
-      alert("Failed to add recipient. Please try again.");
+      setAlert({
+        message: "Failed to add recipient. Please try again.",
+        type: "danger",
+      });
     }
   };
 
-  // Handle removing a recipient
   const handleRemoveRecipient = async (recipientId: string) => {
     try {
       await removeRecipient({
@@ -77,9 +89,13 @@ const Home = () => {
       setRecipientList((prevList) =>
         prevList.filter((recipient) => recipient.recipientId !== recipientId)
       );
+      setAlert({ message: "Recipient removed successfully!", type: "success" });
     } catch (err) {
       console.error("Error removing recipient:", err);
-      alert("Failed to remove recipient. Please try again.");
+      setAlert({
+        message: "Failed to remove recipient. Please try again.",
+        type: "danger",
+      });
     }
   };
 
@@ -90,6 +106,21 @@ const Home = () => {
       {Auth.loggedIn() ? (
         <>
           <div className="container">
+            {alert && (
+              <div
+                className={`alert alert-${alert.type} alert-dismissible fade show`}
+                role="alert"
+              >
+                {alert.message}
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                  onClick={() => setAlert(null)}
+                ></button>
+              </div>
+            )}
             <div className="section-1">
               <h1 id="add-recipient">Add Recipient</h1>
               <form onSubmit={handleFormSubmit}>

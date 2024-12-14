@@ -23,7 +23,9 @@ const Suggestion: React.FC<{
         },
       });
 
-      console.log("OpenAI response:", data?.openAIResponse);
+      if (data?.openAIResponse) {
+        console.log(data.openAIResponse);
+      }
     } catch (err) {
       console.error("Error calling OpenAI API:", err);
     }
