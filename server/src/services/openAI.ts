@@ -28,6 +28,8 @@ const model = new OpenAI({
 export const promptFunc = async (
   recipients: {
     name: string;
+    gender?: string;
+    age?: number;
     gifts?: string[];
     budget: number;
     status: boolean;
@@ -36,9 +38,15 @@ export const promptFunc = async (
   try {
     const suggestions: string[] = [];
 
+    // Flatten the recipients array
+    const flattenedRecipients = recipients.flat();
     // Process each recipient in the array
-    for (const recipient of recipients) {
-      if (!recipient.name || !recipient.budget) {
+    for (const recipient of flattenedRecipients) {
+      if (
+        !recipient.name ||
+        recipient.budget === undefined ||
+        recipient.budget === null
+      ) {
         throw new Error("Recipient name and budget are required.");
       }
 
@@ -48,21 +56,28 @@ export const promptFunc = async (
       }
       // Construct a meaningful prompt for the OpenAI model
       const prompt = `
-      You are an expert in personalized gift recommendations. Using the details provided below, recommend three thoughtful and creative gift ideas. Base your recommendations strictly on the recipient's provided gift ideas or interests. Avoid adding unrelated suggestions.
-      
+      You are an expert in personalized gift recommendations. Using the details provided below, recommend three thoughtful and creative gift ideas.
       Recipient Details:
       - Name: ${recipient.name}
+      - Gender: ${recipient.gender || "Not specified"}
+      - Age: ${recipient.age || "Not specified"}
       - Budget: $${recipient.budget}
-      - Gift Ideas or Interests: ${recipient.gifts?.join(", ") || "None"}
       
       Guidelines for the response:
       - The suggestions must align closely with the recipient's provided gift ideas or interests.
       - Consider the budget when suggesting items.
       - Include a header "Gift Ideas for [Recipient's Name]:" before listing the suggestions.
-      - The response should  plain text only, and formatted as a single sentence listing the three ideas, separated by commas.
-      - Do not include suggestions unrelated to the gift ideas or interests provided.
-      
-      Provide your response as a single plain text sentence.
+      - Provide a maximum of 6 gift ideas.
+      - Each gift idea should include the name, a link to the product, and the price.
+
+      Return response format example:
+      "Gift Ideas for ${recipient.name}: 
+      1. [Gift Idea Name 1], [Gift Idea Link 1], [Gift Idea Price 1], 
+      2. [Gift Idea Name 2], [Gift Idea Link 2], [Gift Idea Price 2], 
+      3. [Gift Idea Name 3], [Gift Idea Link 3], [Gift Idea Price 3], 
+      4. [Gift Idea Name 4], [Gift Idea Link 4], [Gift Idea Price 4],
+      5. [Gift Idea Name 5], [Gift Idea Link 5], [Gift Idea Price 5],
+      6. [Gift Idea Name 6], [Gift Idea Link 6], [Gift Idea Price 6]"
       `;
 
       const output = await model.invoke(prompt);

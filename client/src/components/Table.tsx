@@ -57,7 +57,7 @@ const Table: React.FC<{
               data.map((recipient) => (
                 <tr key={recipient.recipientId}>
                   <td>{recipient.name}</td>
-                  <td>{recipient.gifts.join(", ")}</td>
+                  <td>{recipient.gifts.length ? "w" : "Look for one!"}</td>
                   <td>${recipient.budget}</td>
                   <td
                     className={`status ${

@@ -9,6 +9,8 @@ export const GET_ME = gql`
       recipientCount
       recipientList {
         name
+        gender
+        age
         gifts
         recipientId
         budget

@@ -29,7 +29,7 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_RECIPIENT = gql`
-  mutation addRecipient($input: AddRecipientInput!) {
+  mutation addRecipient($input: RecipientInput!) {
     addRecipient(input: $input) {
       _id
       username
@@ -37,6 +37,8 @@ export const ADD_RECIPIENT = gql`
       recipientCount
       recipientList {
         name
+        gender
+        age
         gifts
         recipientId
         budget
@@ -55,6 +57,8 @@ export const REMOVE_RECIPIENT = gql`
       recipientCount
       recipientList {
         name
+        gender
+        age
         gifts
         recipientId
         budget
@@ -71,7 +75,7 @@ export const OPEN_AI_RESPONSE = gql`
 `;
 
 export const UPDATE_RECIPIENT_STATUS = gql`
-  mutation updateRecipientStatus($input: UpdateRecipientInput!) {
+  mutation updateRecipientStatus($input: RecipientInput!) {
     updateRecipientStatus(input: $input) {
       _id
       username
@@ -79,6 +83,8 @@ export const UPDATE_RECIPIENT_STATUS = gql`
       recipientCount
       recipientList {
         name
+        gender
+        age
         gifts
         recipientId
         budget

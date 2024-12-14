@@ -8,9 +8,11 @@ const typeDefs = `
   }
 
   type Recipient {
-    recipientId: ID!
     name: String
+    gender: String
+    age: Int
     gifts: [String]
+    recipientId: ID!
     budget: Float
     status: Boolean
   }
@@ -31,25 +33,12 @@ const typeDefs = `
     password: String!
   }
 
-  input AddRecipientInput {
-    recipientId: ID! 
-    name: String
-    gifts: [String]
-    budget: Float
-    status: Boolean
-  }
-
   input RecipientInput {
-    name: String! 
-    gifts: [String]
-    budget: Float!
-    status: Boolean
-  }
-
-  input UpdateRecipientInput {
-    recipientId: ID! 
     name: String
+    gender: String
+    age: Int
     gifts: [String]
+    recipientId: ID!
     budget: Float
     status: Boolean
   }
@@ -61,10 +50,10 @@ const typeDefs = `
   type Mutation {
     addUser(input: NewUserInput!): Auth
     login(input: LoginUserInput!): Auth
-    addRecipient(input: AddRecipientInput!): User
+    addRecipient(input: RecipientInput!): User
     removeRecipient(recipientId: ID!): User
     openAIResponse(input: [RecipientInput]!): [String]! 
-    updateRecipientStatus(input: UpdateRecipientInput!): User 
+    updateRecipientStatus(input: RecipientInput!): User 
   }
 `;
 
