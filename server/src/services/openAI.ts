@@ -12,7 +12,7 @@ if (!apiKey) {
 const model = new OpenAI({
   temperature: 0.7,
   openAIApiKey: apiKey,
-  modelName: "gpt-4o",
+  modelName: "gpt-4",
   maxTokens: 300,
   topP: 1,
   frequencyPenalty: 0.5,
@@ -31,6 +31,7 @@ export const promptFunc = async (
     gender?: string;
     age?: number;
     gifts?: string[];
+    recipientId: number;
     budget: number;
     status: boolean;
   }[]
@@ -56,28 +57,37 @@ export const promptFunc = async (
       }
       // Construct a meaningful prompt for the OpenAI model
       const prompt = `
-      You are an expert in personalized gift recommendations. Using the details provided below, recommend three thoughtful and creative gift ideas.
-      Recipient Details:
-      - Name: ${recipient.name}
-      - Gender: ${recipient.gender || "Not specified"}
-      - Age: ${recipient.age || "Not specified"}
-      - Budget: $${recipient.budget}
-      
-      Guidelines for the response:
-      - The suggestions must align closely with the recipient's provided gift ideas or interests.
-      - Consider the budget when suggesting items.
-      - Include a header "Gift Ideas for [Recipient's Name]:" before listing the suggestions.
-      - Provide a maximum of 6 gift ideas.
-      - Each gift idea should include the name, a link to the product, and the price.
+You are an expert in personalized gift recommendations. Using the details provided below, recommend three thoughtful and creative gift ideas.
 
-      Return response format example:
-      "Gift Ideas for ${recipient.name}: 
-      1. [Gift Idea Name 1], [Gift Idea Link 1], [Gift Idea Price 1], 
-      2. [Gift Idea Name 2], [Gift Idea Link 2], [Gift Idea Price 2], 
-      3. [Gift Idea Name 3], [Gift Idea Link 3], [Gift Idea Price 3], 
-      4. [Gift Idea Name 4], [Gift Idea Link 4], [Gift Idea Price 4],
-      5. [Gift Idea Name 5], [Gift Idea Link 5], [Gift Idea Price 5],
-      6. [Gift Idea Name 6], [Gift Idea Link 6], [Gift Idea Price 6]"
+Recipient Details:
+- Name: ${recipient.name}
+- Gender: ${recipient.gender || "Not specified"}
+- Age: ${recipient.age || "Not specified"}
+- Budget: $${recipient.budget}
+
+Guidelines for the response:
+- Use real-time browsing capabilities to find gift items within the specified budget. Verify that the links to the products are working and the items are available for purchase.
+- Include a header "Gift Ideas for [Recipient's Name]:" before listing the suggestions.
+- Provide a maximum of 3 gift ideas, each with:
+  - Name of the product.
+  - A working link to the product (must not lead to a 404 error or out-of-stock page).
+  - The accurate price of the product at the time of recommendation.
+- If a product is unavailable or the link leads to an error, find an alternative product within the same budget range and provide the updated link.
+- Ensure that the recommendations are thoughtful and creative, and if possible, align with general preferences for someone of the specified age and gender.
+- search on amazon.com for the gift ideas. make sure the links are valid
+
+The output MUST follow this exact format:
+"recipientId": ${recipient.recipientId},
+"Gift Ideas for ${recipient.name}: 
+1. [Gift Idea Name 1], [Gift Idea Link 1], [Gift Idea Price 1], 
+2. [Gift Idea Name 2], [Gift Idea Link 2], [Gift Idea Price 2], 
+3. [Gift Idea Name 3], [Gift Idea Link 3], [Gift Idea Price 3], 
+
+Link validation:
+- why is [Gift Idea Link 1] not working or leading to an error page? Find an alternative product and provide the updated link.
+- why is [Gift Idea Link 2] not working or leading to an error page? Find an alternative product and provide the updated link.
+- why is [Gift Idea Link 3] not working or leading to an error page? Find an alternative product within the same budget range and provide the updated link.
+"
       `;
 
       const output = await model.invoke(prompt);

@@ -86,7 +86,7 @@ const AddRecipient: React.FC<{}> = ({}) => {
         </div>
       )}
       <h1 id="add-recipient">Add Recipient</h1>
-      <form onSubmit={handleFormSubmit}>
+      <form className="add-recipient" onSubmit={handleFormSubmit}>
         <div className="mb-3">
           <label htmlFor="recipientName" className="form-label">
             Recipient Name

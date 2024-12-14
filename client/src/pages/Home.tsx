@@ -53,15 +53,13 @@ const Home = () => {
     }
   };
 
-  console.log(recipientList);
-
   if (loading) return <p>Loading...</p>;
 
   return (
     <>
       {Auth.loggedIn() ? (
         <>
-          <div className="container">
+          <div className="container-auth">
             {alert && (
               <div
                 className={`alert alert-${alert.type} alert-dismissible fade show`}

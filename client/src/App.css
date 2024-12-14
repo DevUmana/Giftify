@@ -108,21 +108,24 @@ form {
 }
 
 /* HOME PAGE */
-.container {
+.container-auth {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
   width: 100%;
-  margin-top: 20px;
 }
 
 .section-1 {
-  width: 50%;
+  width: 100%;
+}
+
+.section-1 .btn {
+  margin-left: 10px;
 }
 
 .section-2 {
-  width: 50%;
+  width: 100%;
   margin-top: 25px;
+  margin-right: 20px;
 }
 
 .lead {
@@ -130,6 +133,18 @@ form {
   font-weight: bold;
   margin-top: 10rem;
   text-align: center;
+}
+
+/* ADD RECIPIENT */
+
+.add-recipient {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.add-recipient .mb-3 {
+  padding: 0 10px;
 }
 
 /* TABLE */
@@ -280,11 +295,82 @@ form {
   background-color: var(--green);
 }
 
+.ideas-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.ideas-list a {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.ideas-list a:hover {
+  color: var(--dark-green);
+}
+
+.ideas-list span {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+  color: #fff;
+}
+
+.ideas-list .btn {
+  font-size: 20px;
+  margin-left: 10px;
+  border: 2px solid var(--dark-green);
+}
+
 .suggestion p {
   font-size: 24px;
   font-weight: bold;
   margin-top: 20px;
   text-align: left;
+}
+
+/* VIEW GIFTS */
+
+.viewGifts-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 20px;
+  overflow: auto;
+  max-height: 400px;
+}
+
+.viewGifts-body a {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.viewGifts-body a:hover {
+  color: var(--dark-green);
+}
+
+.viewGifts-body span {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.gifts {
+  display: flex;
+  flex-direction: column;
+}
+
+.giftName {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 /* MODAL */
@@ -323,29 +409,13 @@ form {
 }
 
 @media screen and (max-width: 1075px) {
-  .container {
+  .container-auth {
     flex-direction: column;
   }
 
   .section-1,
   .section-2 {
     width: 100%;
-  }
-
-  .table-container {
-    overflow-x: auto;
-  }
-
-  .table {
-    width: 100%;
-  }
-
-  .table td {
-    padding: 8px 12px;
-  }
-
-  .table th {
-    padding: 8px 12px;
   }
 
   .suggestion {
@@ -360,7 +430,7 @@ form {
 }
 
 @media screen and (max-width: 768px) {
-  .container {
+  .container-auth {
     flex-direction: column;
   }
 
