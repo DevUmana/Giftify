@@ -7,14 +7,23 @@ const Suggestion: React.FC<{
 }> = ({ recipientList }) => {
   const [openAiResponse, { loading, data }] = useMutation(OPEN_AI_RESPONSE);
 
+  console.log("Recipient List:");
+  console.log(recipientList);
+
   const handleOpenAi = async () => {
     // Transform recipientList to match the RecipientInput type
     const transformedRecipients = recipientList.map((recipient) => ({
       name: recipient.name,
+      gender: recipient.gender || null,
+      age: recipient.age || null,
       gifts: recipient.gifts,
+      recipientId: recipient.recipientId,
       budget: recipient.budget || null,
       status: recipient.status,
     }));
+
+    console.log("Transformed Recipients:");
+    console.log(transformedRecipients);
 
     try {
       const { data } = await openAiResponse({

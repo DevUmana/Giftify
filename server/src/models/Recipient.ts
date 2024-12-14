@@ -2,6 +2,8 @@ import { Schema, type Document } from "mongoose";
 
 export interface RecipientDocument extends Document {
   name: string;
+  gender: string;
+  age: number;
   gifts: string[];
   recipientId: string;
   budget: number;
@@ -13,6 +15,12 @@ const recipientSchema = new Schema<RecipientDocument>({
   name: {
     type: String,
     required: true,
+  },
+  gender: {
+    type: String,
+  },
+  age: {
+    type: Number,
   },
   gifts: [
     {

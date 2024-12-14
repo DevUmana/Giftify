@@ -21,37 +21,20 @@ interface LoginUserArgs {
   };
 }
 
-interface AddRecipientArgs {
+interface RecipientArgs {
   input: {
     name: string;
-    gifts: string[];
+    gender?: string;
+    age?: number;
+    gifts?: string[];
     recipientId: string;
     budget: number;
     status: boolean;
   };
-}
-
-interface OpenAIResponseArgs {
-  input: Array<{
-    name: string;
-    gifts?: string[];
-    budget: number;
-    status: boolean;
-  }>;
 }
 
 interface RemoveRecipientArgs {
   recipientId: string;
-}
-
-interface UpdateRecipientStatusArgs {
-  input: {
-    recipientId: string;
-    name?: string;
-    gifts?: string[];
-    budget?: number;
-    status?: boolean;
-  };
 }
 
 const resolvers = {
@@ -85,7 +68,7 @@ const resolvers = {
     },
     addRecipient: async (
       _parent: unknown,
-      { input }: AddRecipientArgs,
+      { input }: RecipientArgs,
       context: Context
     ) => {
       if (!context.user)
@@ -117,15 +100,15 @@ const resolvers = {
       if (!updatedUser) throw new Error("User not found.");
       return updatedUser;
     },
-    openAIResponse: async (_parent: unknown, { input }: OpenAIResponseArgs) => {
-      const responses = await promptFunc(input);
+    openAIResponse: async (_parent: unknown, { input }: RecipientArgs) => {
+      const responses = await promptFunc([input]);
       if (!responses || responses.length === 0)
         throw new Error("No response from OpenAI.");
       return responses;
     },
     updateRecipientStatus: async (
       _parent: unknown,
-      { input }: UpdateRecipientStatusArgs,
+      { input }: RecipientArgs,
       context: Context
     ) => {
       if (!context.user)
@@ -134,6 +117,10 @@ const resolvers = {
       const updateFields: Record<string, any> = {};
       if (input.name !== undefined)
         updateFields["recipientList.$.name"] = input.name;
+      if (input.gender !== undefined)
+        updateFields["recipientList.$.gender"] = input.gender;
+      if (input.age !== undefined)
+        updateFields["recipientList.$.age"] = input.age;
       if (input.gifts !== undefined)
         updateFields["recipientList.$.gifts"] = input.gifts;
       if (input.budget !== undefined)
