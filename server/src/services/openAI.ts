@@ -75,18 +75,14 @@ Guidelines for the response:
 - If a product is unavailable or the link leads to an error, find an alternative product within the same budget range and provide the updated link.
 - Ensure that the recommendations are thoughtful and creative, and if possible, align with general preferences for someone of the specified age and gender.
 - search on amazon.com for the gift ideas. make sure the links are valid
+- if you are unable to find a product within the budget, provide an alternative product within the same budget range.
+- always provide 3 gift ideas
 
 The output MUST follow this exact format:
-"recipientId": ${recipient.recipientId},
 "Gift Ideas for ${recipient.name}: 
 1. [Gift Idea Name 1], [Gift Idea Link 1], [Gift Idea Price 1], 
 2. [Gift Idea Name 2], [Gift Idea Link 2], [Gift Idea Price 2], 
 3. [Gift Idea Name 3], [Gift Idea Link 3], [Gift Idea Price 3], 
-
-Link validation:
-- why is [Gift Idea Link 1] not working or leading to an error page? Find an alternative product and provide the updated link.
-- why is [Gift Idea Link 2] not working or leading to an error page? Find an alternative product and provide the updated link.
-- why is [Gift Idea Link 3] not working or leading to an error page? Find an alternative product within the same budget range and provide the updated link.
 "
       `;
 

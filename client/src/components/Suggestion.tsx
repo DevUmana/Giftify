@@ -9,7 +9,6 @@ const Suggestion: React.FC<{
   const [updateRecipientStatus] = useMutation(UPDATE_RECIPIENT);
 
   function parseGiftIdeas(input: string, recipient: string) {
-    const recipientIdPattern = /recipientId: (\w+)/; // Extracts the recipient ID
     const headerPattern = /^Gift Ideas for ([^:]+):/; // Extracts the header
     const giftPattern =
       /(\d+)\.\s(.+?),\s\[(https?:\/\/[^\]]+)\],\s\$(\d+\.\d{2})/g;
