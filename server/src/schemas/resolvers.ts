@@ -26,6 +26,13 @@ interface RecipientArgs {
     name: string;
     gender?: string;
     age?: number;
+    gifts?: Array<{
+      name: string;
+      query: string;
+      price: number;
+      url: string;
+      image: string;
+    }>;
     recipientId: number;
     budget: number;
     status: boolean;

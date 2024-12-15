@@ -341,10 +341,11 @@ form {
   height: 80px;
   object-fit: fill;
   border-radius: 20px;
-  border: 2px solid var(--dark-green);
+  border: 1px solid var(--dark-green);
 }
 
 .recipient li a {
+  width: 100%;
   padding-left: 10px;
   color: #fff;
   transition: color 0.3s ease;
@@ -355,12 +356,16 @@ form {
 }
 
 .recipient li span {
-  padding-left: 10px;
+  align-content: flex-start;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .recipient li button {
+  width: 50px;
+  height: auto;
+  align-content: center;
   margin-top: 0;
-  margin-left: 10px;
   background-color: var(--dark-green);
 }
 
@@ -496,5 +501,169 @@ form {
 
   .table-info p {
     margin-bottom: 10px;
+  }
+
+  .suggestion {
+    width: 80%;
+  }
+
+  .suggestion div {
+    font-size: 20px;
+  }
+
+  .suggestion-data .recipient {
+    padding: 10px;
+  }
+
+  .recipient p {
+    font-size: 24px;
+  }
+
+  .recipient li {
+    height: 80px;
+  }
+
+  .recipient li img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .container-auth {
+    flex-direction: column;
+  }
+
+  .section-1,
+  .section-2 {
+    width: 100%;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .table {
+    width: 100%;
+  }
+
+  .table td {
+    padding: 8px 12px;
+  }
+
+  .table th {
+    padding: 8px 12px;
+  }
+
+  .table-info {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .table-info p {
+    margin-bottom: 10px;
+  }
+
+  .suggestion {
+    width: 90%;
+  }
+
+  .suggestion div {
+    font-size: 20px;
+  }
+
+  .suggestion-data .recipient {
+    padding: 10px;
+  }
+
+  .recipient p {
+    font-size: 24px;
+  }
+
+  .recipient li {
+    height: 80px;
+  }
+
+  .recipient li img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .recipient li a {
+    font-size: 16px;
+  }
+
+  .recipient li span {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  .recipient li button {
+    width: 40px;
+  }
+
+  .viewGifts-body a {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .table-container {
+    width: 100%;
+    font-size: 12px;
+  }
+
+  .table td {
+    padding: 6px 10px;
+  }
+
+  .table th {
+    padding: 6px 10px;
+  }
+
+  .table-info {
+    font-size: 16px;
+  }
+
+  .table td .btn {
+    font-size: 12px;
+  }
+
+  .suggestion div {
+    font-size: 18px;
+  }
+
+  .suggestion-data .recipient {
+    padding: 8px;
+  }
+
+  .recipient p {
+    font-size: 20px;
+  }
+
+  .recipient li {
+    height: 60px;
+  }
+
+  .recipient li img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .recipient li a {
+    font-size: 14px;
+  }
+
+  .recipient li span {
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+
+  .recipient li button {
+    width: 30px;
+  }
+
+  .viewGifts-body a {
+    font-size: 12px;
   }
 }

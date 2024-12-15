@@ -15,20 +15,23 @@ const Suggestion: React.FC<{
       name: recipient.name,
       gender: recipient.gender || null,
       age: recipient.age || null,
+      gifts: recipient.gifts || [],
       recipientId: recipient.recipientId,
       budget: recipient.budget || null,
       status: recipient.status,
     }));
 
+    // Remove __typename from the transformed recipients
+    const sanitizedRecipients = removeTypename(transformedRecipients);
+
     try {
       const { data } = await openAiResponse({
         variables: {
-          input: transformedRecipients,
+          input: sanitizedRecipients,
         },
       });
 
       const parsedData = parseData(data);
-      console.log("Parsed data:", parsedData);
       return parsedData;
     } catch (err) {
       console.error("Error calling OpenAI API:", err);
@@ -48,6 +51,22 @@ const Suggestion: React.FC<{
     });
 
     return parsedData;
+  };
+
+  const removeTypename = (obj: any): any => {
+    if (Array.isArray(obj)) {
+      return obj.map(removeTypename);
+    } else if (obj && typeof obj === "object") {
+      const { __typename, ...rest } = obj;
+      return Object.keys(rest).reduce(
+        (cleaned: { [key: string]: any }, key) => {
+          cleaned[key] = removeTypename(rest[key]);
+          return cleaned;
+        },
+        {}
+      );
+    }
+    return obj;
   };
 
   const addGiftToCart = async (
@@ -115,7 +134,7 @@ const Suggestion: React.FC<{
                     >
                       {product.query}
                     </a>{" "}
-                    <span>- Price: {product.details.offer.price}</span>
+                    <span>Price: {product.details.offer.price}</span>
                     <button
                       className="btn"
                       disabled={loading}
@@ -130,7 +149,7 @@ const Suggestion: React.FC<{
                         (e.target as HTMLButtonElement).style.display = "none";
                       }}
                     >
-                      Add Gift
+                      +
                     </button>
                   </li>
                 ))}
