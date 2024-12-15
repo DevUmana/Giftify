@@ -25,7 +25,13 @@ export const promptFunc = async (
     name: string;
     gender?: string;
     age?: number;
-    gifts?: string[];
+    gifts?: Array<{
+      name: string;
+      query: string;
+      price: number;
+      url: string;
+      image: string;
+    }>;
     recipientId: number;
     budget: number;
     status: boolean;
@@ -59,6 +65,10 @@ export const promptFunc = async (
       if (recipient.status) {
         continue;
       }
+
+      // get all the gifts name from the recipient
+      const gifts = recipient.gifts?.map((gift) => gift.name) || [];
+
       // Construct a meaningful prompt for the OpenAI model
       const prompt = `
 You are an expert in personalized gift recommendations. Using the details provided below, recommend three thoughtful and creative gift ideas.
@@ -74,6 +84,9 @@ Guidelines for the response:
 - Ensure to get the latest and trending products (Current date, 12/15/2024)
 - Make sure the the product is of high quality
 - Ensure the product are actual products and not services
+- Do not return product with the name of ${gifts.join(
+        ", "
+      )} since this is already gifted to the recipient
 
 
 The output MUST follow this exact format:
