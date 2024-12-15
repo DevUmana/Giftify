@@ -79,6 +79,7 @@ Guidelines for the response:
 - always provide 3 gift ideas
 
 The output MUST follow this exact format:
+"RecipientId: ${recipient.recipientId}":
 "Gift Ideas for ${recipient.name}: 
 1. [Gift Idea Name 1], [Gift Idea Link 1], [Gift Idea Price 1], 
 2. [Gift Idea Name 2], [Gift Idea Link 2], [Gift Idea Price 2], 

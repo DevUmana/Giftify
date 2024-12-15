@@ -327,7 +327,7 @@ form {
   border: 2px solid var(--dark-green);
 }
 
-.suggestion p {
+.suggestion div {
   font-size: 24px;
   font-weight: bold;
   margin-top: 20px;
