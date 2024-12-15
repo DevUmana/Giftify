@@ -19,19 +19,14 @@ const ViewGifts: React.FC<ViewGiftsProps> = ({ gifts, data }) => {
 
   useEffect(() => {
     const total = gifts.reduce((acc, gift) => {
-      console.log("Gift:", gift);
       const [, , price] = gift.split("|");
-      console.log("Price:", price);
-      //split the price $ sign and convert to integer
       const convertedPrice = parseInt(price.split("$")[1]);
       return acc + convertedPrice;
     }, 0);
     setTotalBudget(total);
-    console.log("Total cost:", total);
   }, [gifts]);
 
   const removeGiftFromList = async (recipientId: string, giftIndex: number) => {
-    console.log(recipientId, giftIndex);
     try {
       await removeGift({
         variables: {

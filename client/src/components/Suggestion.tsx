@@ -9,11 +9,19 @@ const Suggestion: React.FC<{
   const [updateRecipientStatus] = useMutation(UPDATE_RECIPIENT);
 
   function parseGiftIdeas(input: string, recipient: string) {
+    const recipientIdPattern = /RecipientId: ([a-f0-9\-]+)/i;
     const headerPattern = /^Gift Ideas for ([^:]+):/; // Extracts the header
     const giftPattern =
       /(\d+)\.\s(.+?),\s\[(https?:\/\/[^\]]+)\],\s\$(\d+\.\d{2})/g;
 
     // Extract header from input or use the provided recipient name
+
+    const recipientIdMatch = input.match(recipientIdPattern);
+    if (!recipientIdMatch) {
+      throw new Error("Recipient ID not found in response.");
+    }
+    const recipientId = recipientIdMatch[1];
+
     const headerMatch = input.match(headerPattern);
     const header = headerMatch
       ? `Gift Ideas for ${headerMatch[1]}:`
@@ -31,7 +39,7 @@ const Suggestion: React.FC<{
       });
     }
 
-    return { header, gifts: results };
+    return { recipientId, header, gifts: results };
   }
 
   const addGiftToCart = async (
@@ -75,9 +83,7 @@ const Suggestion: React.FC<{
         },
       });
 
-      if (data?.openAIResponse) {
-        console.log(data.openAIResponse);
-      }
+      return data;
     } catch (err) {
       console.error("Error calling OpenAI API:", err);
     }
@@ -87,49 +93,49 @@ const Suggestion: React.FC<{
     data: string[],
     recipientList: { name: string; recipientId: string; status: boolean }[]
   ) => {
-    // Filter recipients to remove those with status: true
+    // Filter recipients to exclude those with status: true
     const filteredRecipients = recipientList.filter(
       (recipient) => !recipient.status
     );
 
-    return data.map((suggestion, index) => {
-      const recipient = filteredRecipients[index]; // Align filtered recipients with data
+    // Map through filtered recipients and match suggestions with recipientId
+    return filteredRecipients.map((recipient) => {
+      // Find the matching suggestion for the recipient
+      const suggestion = data.find((s) => s.includes(recipient.recipientId));
 
-      if (!recipient) return null; // Safeguard in case of misalignment
+      if (!suggestion) return null; // No suggestion for this recipient
 
+      // Parse the gift suggestion
       const parsedData = parseGiftIdeas(suggestion, recipient.name);
-      const recipientId = recipient.recipientId;
 
       return (
-        <>
-          <p className="ideas" key={recipientId}>
-            {parsedData.header}
-            <ul className="ideas-list">
-              {parsedData.gifts.map((gift, giftIndex) => (
-                <li key={giftIndex}>
-                  <a href={gift.link} target="_blank" rel="noreferrer">
-                    {gift.name}
-                  </a>
-                  , <span>${gift.price}</span>
-                  <button
-                    className="btn"
-                    onClick={(e) => {
-                      addGiftToCart(
-                        recipientId,
-                        gift.name,
-                        gift.link,
-                        gift.price
-                      );
-                      (e.target as HTMLButtonElement).style.display = "none";
-                    }}
-                  >
-                    Add Gift
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </p>
-        </>
+        <div className="ideas" key={recipient.recipientId}>
+          {parsedData.header}
+          <ul className="ideas-list">
+            {parsedData.gifts.map((gift, index) => (
+              <li key={index}>
+                <a href={gift.link} target="_blank" rel="noreferrer">
+                  {gift.name}
+                </a>
+                , <span>${gift.price}</span>
+                <button
+                  className="btn"
+                  onClick={(e) => {
+                    addGiftToCart(
+                      recipient.recipientId,
+                      gift.name,
+                      gift.link,
+                      gift.price
+                    );
+                    (e.target as HTMLButtonElement).style.display = "none";
+                  }}
+                >
+                  Add Gift
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       );
     });
   };
