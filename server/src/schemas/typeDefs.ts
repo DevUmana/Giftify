@@ -1,4 +1,6 @@
 const typeDefs = `
+  scalar JSON
+
   type User {
     _id: ID!
     username: String!
@@ -11,10 +13,18 @@ const typeDefs = `
     name: String
     gender: String
     age: Int
-    gifts: [String]
+    gifts: [Gift!]
     recipientId: ID!
     budget: Float
     status: Boolean
+  }
+
+  type Gift {
+    name: String!
+    query: String!
+    price: Float!
+    url: String!
+    image: String!
   }
 
   type Auth {
@@ -22,6 +32,17 @@ const typeDefs = `
     user: User!
   }
 
+  type Product {
+    name: String!
+    query: String!
+    details: JSON
+  }
+
+  type RecipientResponse {
+    recipientId: String!
+    products: [Product!]!
+  }
+  
   input NewUserInput {
     username: String!
     email: String!
@@ -37,9 +58,23 @@ const typeDefs = `
     name: String
     gender: String
     age: Int
-    gifts: [String]
+    gifts: [GiftInput]
     recipientId: ID!
     budget: Float
+    status: Boolean
+  }
+
+  input GiftInput {
+    name: String!
+    query: String!
+    price: Float!
+    url: String!
+    image: String!
+  }
+
+  input RecipientResponseInput {
+    recipientId: String!
+    gifts: [GiftInput!]
     status: Boolean
   }
 
@@ -52,8 +87,8 @@ const typeDefs = `
     login(input: LoginUserInput!): Auth
     addRecipient(input: RecipientInput!): User
     removeRecipient(recipientId: ID!): User
-    openAIResponse(input: [RecipientInput]!): [String]! 
-    updateRecipientStatus(input: RecipientInput!): User
+    openAIResponse(input: [RecipientInput]!): [RecipientResponse!]!
+    updateRecipientStatus(input: RecipientResponseInput!): User
     removeGiftFromRecipient(recipientId: ID!, giftIndex: Int!): User
   }
 `;

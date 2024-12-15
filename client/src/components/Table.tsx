@@ -11,7 +11,7 @@ const Table: React.FC<{
   data: Recipient[];
   onRemove: (recipientId: string) => void;
 }> = ({ data, onRemove }) => {
-  const [updateRecipientStatus] = useMutation(UPDATE_RECIPIENT);
+  const [updateRecipient] = useMutation(UPDATE_RECIPIENT);
   const [totalBudget, setTotalBudget] = useState<number>(0);
   const today = new Date();
   const christmas = new Date("2024-12-25T00:00:00");
@@ -40,7 +40,7 @@ const Table: React.FC<{
 
   const handleStatusUpdate = async (recipientId: string, status: boolean) => {
     try {
-      await updateRecipientStatus({
+      await updateRecipient({
         variables: {
           input: {
             recipientId,
@@ -75,7 +75,7 @@ const Table: React.FC<{
                 <tr key={recipient.recipientId}>
                   <td>{recipient.name}</td>
                   <td>
-                    {recipient.gifts.length ? (
+                    {recipient.gifts && recipient.gifts.length ? (
                       <ViewGifts gifts={recipient.gifts} data={recipient} />
                     ) : (
                       "Find the thing!"

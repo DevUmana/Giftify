@@ -39,7 +39,13 @@ export const ADD_RECIPIENT = gql`
         name
         gender
         age
-        gifts
+        gifts {
+          name
+          query
+          price
+          url
+          image
+        }
         recipientId
         budget
         status
@@ -59,7 +65,13 @@ export const REMOVE_RECIPIENT = gql`
         name
         gender
         age
-        gifts
+        gifts {
+          name
+          query
+          price
+          url
+          image
+        }
         recipientId
         budget
         status
@@ -70,12 +82,19 @@ export const REMOVE_RECIPIENT = gql`
 
 export const OPEN_AI_RESPONSE = gql`
   mutation openAIResponse($input: [RecipientInput]!) {
-    openAIResponse(input: $input)
+    openAIResponse(input: $input) {
+      recipientId
+      products {
+        name
+        query
+        details
+      }
+    }
   }
 `;
 
 export const UPDATE_RECIPIENT = gql`
-  mutation updateRecipientStatus($input: RecipientInput!) {
+  mutation updateRecipient($input: RecipientResponseInput!) {
     updateRecipientStatus(input: $input) {
       _id
       username
@@ -85,7 +104,13 @@ export const UPDATE_RECIPIENT = gql`
         name
         gender
         age
-        gifts
+        gifts {
+          name
+          query
+          price
+          url
+          image
+        }
         recipientId
         budget
         status
@@ -105,7 +130,13 @@ export const REMOVE_GIFT = gql`
         name
         gender
         age
-        gifts
+        gifts {
+          name
+          query
+          price
+          url
+          image
+        }
         recipientId
         budget
         status
