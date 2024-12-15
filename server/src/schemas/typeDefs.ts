@@ -53,7 +53,8 @@ const typeDefs = `
     addRecipient(input: RecipientInput!): User
     removeRecipient(recipientId: ID!): User
     openAIResponse(input: [RecipientInput]!): [String]! 
-    updateRecipientStatus(input: RecipientInput!): User 
+    updateRecipientStatus(input: RecipientInput!): User
+    removeGiftFromRecipient(recipientId: ID!, giftIndex: Int!): User
   }
 `;
 

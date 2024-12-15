@@ -74,9 +74,29 @@ export const OPEN_AI_RESPONSE = gql`
   }
 `;
 
-export const UPDATE_RECIPIENT_STATUS = gql`
+export const UPDATE_RECIPIENT = gql`
   mutation updateRecipientStatus($input: RecipientInput!) {
     updateRecipientStatus(input: $input) {
+      _id
+      username
+      email
+      recipientCount
+      recipientList {
+        name
+        gender
+        age
+        gifts
+        recipientId
+        budget
+        status
+      }
+    }
+  }
+`;
+
+export const REMOVE_GIFT = gql`
+  mutation removeGiftFromRecipient($recipientId: ID!, $giftIndex: Int!) {
+    removeGiftFromRecipient(recipientId: $recipientId, giftIndex: $giftIndex) {
       _id
       username
       email

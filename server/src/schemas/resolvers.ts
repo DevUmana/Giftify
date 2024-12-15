@@ -27,7 +27,7 @@ interface RecipientArgs {
     gender?: string;
     age?: number;
     gifts?: string[];
-    recipientId: string;
+    recipientId: number;
     budget: number;
     status: boolean;
   };
@@ -115,29 +115,81 @@ const resolvers = {
         throw new AuthenticationError("You need to be logged in!");
 
       const updateFields: Record<string, any> = {};
+
       if (input.name !== undefined)
         updateFields["recipientList.$.name"] = input.name;
       if (input.gender !== undefined)
         updateFields["recipientList.$.gender"] = input.gender;
       if (input.age !== undefined)
         updateFields["recipientList.$.age"] = input.age;
-      if (input.gifts !== undefined)
-        updateFields["recipientList.$.gifts"] = input.gifts;
       if (input.budget !== undefined)
         updateFields["recipientList.$.budget"] = input.budget;
       if (input.status !== undefined)
         updateFields["recipientList.$.status"] = input.status;
 
-      const updatedUser = await User.findOneAndUpdate(
+      // First, handle non-gift updates
+      if (Object.keys(updateFields).length > 0) {
+        const updatedUser = await User.findOneAndUpdate(
+          {
+            _id: context.user._id,
+            "recipientList.recipientId": input.recipientId,
+          },
+          { $set: updateFields },
+          { new: true }
+        );
+
+        if (!updatedUser) throw new Error("User or recipient not found.");
+      }
+
+      // Then, handle gifts (separate operation)
+      if (input.gifts !== undefined) {
+        const updatedUser = await User.findOneAndUpdate(
+          {
+            _id: context.user._id,
+            "recipientList.recipientId": input.recipientId,
+          },
+          { $push: { "recipientList.$.gifts": { $each: input.gifts } } },
+          { new: true }
+        );
+
+        if (!updatedUser) throw new Error("User or recipient not found.");
+        return updatedUser;
+      }
+
+      // Return updated user after all operations
+      return await User.findById(context.user._id);
+    },
+    removeGiftFromRecipient: async (
+      _parent: unknown,
+      { recipientId, giftIndex }: { recipientId: string; giftIndex: number },
+      context: Context
+    ) => {
+      if (!context.user)
+        throw new AuthenticationError("You need to be logged in!");
+
+      // Step 1: Nullify the specific index using $unset
+      const unsetResult = await User.findOneAndUpdate(
         {
           _id: context.user._id,
-          "recipientList.recipientId": input.recipientId,
+          "recipientList.recipientId": recipientId,
         },
-        { $set: updateFields },
+        { $unset: { [`recipientList.$.gifts.${giftIndex}`]: 1 } },
         { new: true }
       );
 
-      if (!updatedUser) throw new Error("User or recipient not found.");
+      if (!unsetResult) throw new Error("User or recipient not found.");
+
+      // Step 2: Remove null values from the array using $pull
+      const updatedUser = await User.findOneAndUpdate(
+        {
+          _id: context.user._id,
+          "recipientList.recipientId": recipientId,
+        },
+        { $pull: { "recipientList.$.gifts": null } },
+        { new: true }
+      );
+
+      if (!updatedUser) throw new Error("Failed to update recipient gifts.");
       return updatedUser;
     },
   },
