@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { OPEN_AI_RESPONSE, UPDATE_RECIPIENT } from "../utils/mutations";
 import type { Recipient } from "../models/Recipient";
+import defaultImage from "../assets/default.png";
 
 const Suggestion: React.FC<{
   recipientList: Recipient[];
@@ -104,7 +105,7 @@ const Suggestion: React.FC<{
                 {recipient.products.map((product: any, index: number) => (
                   <li key={index}>
                     <img
-                      src={product.details.product_photos[0]}
+                      src={product.details.product_photos[0] || defaultImage}
                       alt="Product"
                     />
                     <a
@@ -124,7 +125,7 @@ const Suggestion: React.FC<{
                           product.query,
                           product.details.offer.price,
                           product.details.offer.offer_page_url,
-                          product.details.product_photos[0]
+                          product.details.product_photos[0] || defaultImage
                         );
                         (e.target as HTMLButtonElement).style.display = "none";
                       }}
