@@ -15,7 +15,27 @@ const AppNavbar = () => {
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container fluid>
           <Navbar.Brand as={Link} to="/">
-            Giftify
+            <span className="odd" id="appName">
+              G
+            </span>
+            <span className="even" id="appName">
+              i
+            </span>
+            <span className="odd" id="appName">
+              f
+            </span>
+            <span className="even" id="appName">
+              t
+            </span>
+            <span className="odd" id="appName">
+              i
+            </span>
+            <span className="even" id="appName">
+              f
+            </span>
+            <span className="odd" id="appName">
+              y
+            </span>
           </Navbar.Brand>
           <Navbar.Collapse id="navbar" className="d-flex flex-row-reverse">
             <Nav className="ml-auto d-flex">
