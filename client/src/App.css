@@ -1,10 +1,10 @@
 /* VARIABLES */
 :root {
   --red: #dc8281;
-  --dark-red: #a33f1f;
   --green: #a8c77f;
-  --dark-green: #5f8c3b;
+  --dark-green: #476a2b;
   --gold: #f0d279;
+  --new-red: rgb(218, 52, 52);
 }
 
 /* GLOBAL STYLES */
@@ -18,7 +18,7 @@ h1,
 h2,
 h3,
 h4,
-h5,
+ß h5,
 h6 {
   font-family: "Rubik Mono One", sans-serif;
 }
@@ -69,6 +69,18 @@ h1 {
   background-color: var(--red) !important;
 }
 
+.odd {
+  color: var(--new-red);
+}
+
+.even {
+  color: var(--dark-green);
+}
+
+#appName {
+  font-size: 40px;
+}
+
 /* BUTTON STYLING */
 .btn {
   margin-top: 20px;
@@ -114,6 +126,10 @@ form {
   width: 100%;
 }
 
+.container-unauth h1 {
+  color: var(--gold);
+}
+
 .section-1 {
   width: 100%;
 }
@@ -147,6 +163,10 @@ form {
   padding: 0 10px;
 }
 
+#add-recipient {
+  color: var(--gold);
+}
+
 /* TABLE */
 .table-container {
   position: relative;
@@ -175,7 +195,7 @@ form {
 }
 
 .table th {
-  background-color: var(--red);
+  background-color: var(--new-red);
   color: var(--gold);
   font-weight: bold;
   text-transform: uppercase;
@@ -265,7 +285,7 @@ form {
 }
 
 #daysLeft {
-  color: var(--dark-red);
+  color: var(--new-red);
   font-size: 30px;
   font-weight: bold;
   padding-left: 10px;
@@ -380,15 +400,30 @@ form {
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  margin-top: 20px;
   overflow: auto;
   max-height: 400px;
+  background-image: url("./assets/giftwrap.png");
+  background-size: cover;
+  color: var(--new-red);
+}
+
+.viewGifts-body li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  background-color: var(--gold);
+  border: 2px solid var(--green);
+  border-radius: 20px;
+  margin-top: 10px;
 }
 
 .viewGifts-body a {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
-  color: #fff;
+  color: var(--new-red);
   transition: color 0.3s ease;
 }
 
@@ -397,9 +432,8 @@ form {
 }
 
 .viewGifts-body span {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
-  color: #fff;
 }
 
 .gifts {
@@ -410,6 +444,8 @@ form {
 .giftName {
   padding-top: 10px;
   padding-bottom: 10px;
+  color: var(--new-red);
+  font-size: 24px !important;
 }
 
 /* MODAL */
