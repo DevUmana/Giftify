@@ -74,7 +74,7 @@ h1 {
   margin-top: 20px;
   padding: 8px 12px;
   border: none;
-  background-color: var(--green);
+  background-color: var(--dark-green);
   color: #fff;
   font-size: 20px;
   font-weight: bold;
@@ -84,7 +84,7 @@ h1 {
 
 .btn:active,
 .btn:hover {
-  background-color: var(--dark-green) !important;
+  background-color: var(--green) !important;
 }
 
 .btn:disabled {
@@ -232,6 +232,10 @@ form {
   background-color: #fff;
 }
 
+.table .status:hover {
+  cursor: pointer;
+}
+
 .text-center {
   text-align: center;
   font-style: italic;
@@ -281,50 +285,7 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 70%;
-}
-
-.suggestion .btn {
-  margin-bottom: 20px;
-}
-
-.ideas {
-  border-radius: 10px;
-  border: 5px solid var(--green);
-  padding: 20px;
-  background-color: var(--green);
-}
-
-.ideas-list {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-top: 20px;
-}
-
-.ideas-list a {
-  font-size: 20px;
-  font-weight: bold;
-  text-align: left;
-  color: #fff;
-  transition: color 0.3s ease;
-}
-
-.ideas-list a:hover {
-  color: var(--dark-green);
-}
-
-.ideas-list span {
-  font-size: 20px;
-  font-weight: bold;
-  text-align: left;
-  color: #fff;
-}
-
-.ideas-list .btn {
-  font-size: 20px;
-  margin-left: 10px;
-  border: 2px solid var(--dark-green);
+  width: 60%;
 }
 
 .suggestion div {
@@ -332,6 +293,79 @@ form {
   font-weight: bold;
   margin-top: 20px;
   text-align: left;
+}
+
+.suggestion-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.suggestion-data .recipient {
+  border-radius: 20px;
+  background-color: var(--green);
+  border: 2px solid var(--dark-green);
+  width: 100%;
+  padding: 20px;
+}
+
+.openAI {
+  font-size: 40px;
+  margin-top: 20px;
+}
+
+.recipient p {
+  font-size: 30px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.recipient ul {
+  list-style-type: none;
+  padding: 0;
+  margin-left: 40px;
+  margin-bottom: 0;
+}
+
+.recipient li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100px;
+  margin-top: 10px;
+}
+
+.recipient li img {
+  width: 80px;
+  height: 80px;
+  object-fit: fill;
+  border-radius: 20px;
+  border: 2px solid var(--dark-green);
+}
+
+.recipient li a {
+  padding-left: 10px;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.recipient li a:hover {
+  color: var(--dark-green);
+}
+
+.recipient li span {
+  padding-left: 10px;
+}
+
+.recipient li button {
+  margin-top: 0;
+  margin-left: 10px;
+  background-color: var(--dark-green);
+}
+
+.recipient .btn:hover {
+  background-color: var(--gold) !important;
 }
 
 /* VIEW GIFTS */

@@ -1,10 +1,18 @@
 import { Schema, type Document } from "mongoose";
 
+export interface Product {
+  name: string;
+  query: string;
+  price: number;
+  url: string;
+  image: string;
+}
+
 export interface RecipientDocument extends Document {
   name: string;
   gender: string;
   age: number;
-  gifts: string[];
+  gifts: Product[];
   recipientId: string;
   budget: number;
   status: boolean;
@@ -24,7 +32,26 @@ const recipientSchema = new Schema<RecipientDocument>({
   },
   gifts: [
     {
-      type: String,
+      name: {
+        type: String,
+        required: true,
+      },
+      query: {
+        type: String,
+        required: true,
+      },
+      price: {
+        type: Number,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
+      image: {
+        type: String,
+        required: true,
+      },
     },
   ],
   recipientId: {

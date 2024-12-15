@@ -11,7 +11,13 @@ export const GET_ME = gql`
         name
         gender
         age
-        gifts
+        gifts {
+          name
+          query
+          price
+          url
+          image
+        }
         recipientId
         budget
         status

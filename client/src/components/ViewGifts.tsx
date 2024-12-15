@@ -4,26 +4,31 @@ import { Recipient } from "../models/Recipient";
 import { REMOVE_GIFT } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
 
+interface Gift {
+  name: string;
+  query: string;
+  price: number;
+  url: string;
+  image: string;
+}
+
 interface ViewGiftsProps {
-  gifts: string[];
+  gifts: Gift[];
   data: Recipient;
 }
 
 const ViewGifts: React.FC<ViewGiftsProps> = ({ gifts, data }) => {
   const [show, setShow] = useState(false);
-  const [totalCost, setTotalBudget] = useState<number>(0);
+  const [totalCost, setTotalCost] = useState<number>(0);
   const [removeGift] = useMutation(REMOVE_GIFT);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // Calculate the total cost of all gifts
   useEffect(() => {
-    const total = gifts.reduce((acc, gift) => {
-      const [, , price] = gift.split("|");
-      const convertedPrice = parseInt(price.split("$")[1]);
-      return acc + convertedPrice;
-    }, 0);
-    setTotalBudget(total);
+    const total = gifts.reduce((acc, gift) => acc + gift.price, 0);
+    setTotalCost(total);
   }, [gifts]);
 
   const removeGiftFromList = async (recipientId: string, giftIndex: number) => {
@@ -39,34 +44,26 @@ const ViewGifts: React.FC<ViewGiftsProps> = ({ gifts, data }) => {
     }
   };
 
-  const TransformGifts = (gifts: string[]) => {
+  const TransformGifts = (gifts: Gift[]) => {
     return (
       <ul>
-        {gifts.map((gift, index) => {
-          const [name, link, price] = gift.split("|");
-          if (!name || !link || !price) {
-            console.error(`Invalid gift format: ${gift}`);
-            return null;
-          }
-
-          return (
-            <li key={`${gift}-${index}`}>
-              <div className="gifts">
-                <span className="giftName">Gift {index + 1} </span>
-                <a href={link} target="_blank" rel="noreferrer">
-                  {name}
-                </a>
-                <span> Price: {price}</span>
-                <Button
-                  variant="danger"
-                  onClick={() => removeGiftFromList(data.recipientId, index)}
-                >
-                  Remove
-                </Button>
-              </div>
-            </li>
-          );
-        })}
+        {gifts.map((gift, index) => (
+          <li key={`${gift.name}-${index}`}>
+            <div className="gifts">
+              <span className="giftName">Gift {index + 1}: </span>
+              <a href={gift.url} target="_blank" rel="noreferrer">
+                {gift.name}
+              </a>
+              <span> Price: ${gift.price.toFixed(2)}</span>
+              <Button
+                variant="danger"
+                onClick={() => removeGiftFromList(data.recipientId, index)}
+              >
+                Remove
+              </Button>
+            </div>
+          </li>
+        ))}
       </ul>
     );
   };
@@ -80,7 +77,7 @@ const ViewGifts: React.FC<ViewGiftsProps> = ({ gifts, data }) => {
       <Modal show={show} onHide={handleClose}>
         <Modal.Header className="viewGifts-header" closeButton>
           <Modal.Title>
-            Gifts for {data.name} - Total Cost: ${totalCost}
+            Gifts for {data.name} - Total Cost: ${totalCost.toFixed(2)}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="viewGifts-body">

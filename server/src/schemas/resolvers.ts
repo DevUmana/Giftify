@@ -26,7 +26,24 @@ interface RecipientArgs {
     name: string;
     gender?: string;
     age?: number;
-    gifts?: string[];
+    recipientId: number;
+    budget: number;
+    status: boolean;
+  };
+}
+
+interface UpdateArgs {
+  input: {
+    name: string;
+    gender?: string;
+    age?: number;
+    gifts?: Array<{
+      name: string;
+      query: string;
+      price: number;
+      url: string;
+      image: string;
+    }>;
     recipientId: number;
     budget: number;
     status: boolean;
@@ -102,13 +119,23 @@ const resolvers = {
     },
     openAIResponse: async (_parent: unknown, { input }: RecipientArgs) => {
       const responses = await promptFunc([input]);
-      if (!responses || responses.length === 0)
+
+      if (!responses || responses.length === 0) {
         throw new Error("No response from OpenAI.");
-      return responses;
+      }
+
+      return responses.map((response) => ({
+        recipientId: response.recipientId,
+        products: response.products.map((product) => ({
+          name: product.name,
+          query: product.query,
+          details: product.details,
+        })),
+      }));
     },
     updateRecipientStatus: async (
       _parent: unknown,
-      { input }: RecipientArgs,
+      { input }: UpdateArgs,
       context: Context
     ) => {
       if (!context.user)

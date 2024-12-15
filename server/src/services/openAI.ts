@@ -1,4 +1,5 @@
 import { OpenAI } from "@langchain/openai";
+import { fetchProducts } from "./productsAPI.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -12,19 +13,13 @@ if (!apiKey) {
 const model = new OpenAI({
   temperature: 0.7,
   openAIApiKey: apiKey,
-  modelName: "gpt-4",
+  modelName: "gpt-4o",
   maxTokens: 300,
   topP: 1,
   frequencyPenalty: 0.5,
   presencePenalty: 0.5,
 });
 
-/**
- * Generate gift suggestions for an array of recipients.
- *
- * @param recipients Array of recipient objects.
- * @returns Promise<string[]> Array of gift suggestions for each recipient.
- */
 export const promptFunc = async (
   recipients: {
     name: string;
@@ -35,7 +30,16 @@ export const promptFunc = async (
     budget: number;
     status: boolean;
   }[]
-): Promise<string[]> => {
+): Promise<
+  {
+    recipientId: string;
+    products: Array<{
+      name: string;
+      query: string;
+      details: any;
+    }>;
+  }[]
+> => {
   try {
     const suggestions: string[] = [];
 
@@ -66,34 +70,37 @@ Recipient Details:
 - Budget: $${recipient.budget}
 
 Guidelines for the response:
-- Use real-time browsing capabilities to find gift items within the specified budget. Verify that the links to the products are working and the items are available for purchase.
-- Include a header "Gift Ideas for [Recipient's Name]:" before listing the suggestions.
-- Provide a maximum of 3 gift ideas, each with:
-  - Name of the product.
-  - A working link to the product (must not lead to a 404 error or out-of-stock page).
-  - The accurate price of the product at the time of recommendation.
-- If a product is unavailable or the link leads to an error, find an alternative product within the same budget range and provide the updated link.
-- Ensure that the recommendations are thoughtful and creative, and if possible, align with general preferences for someone of the specified age and gender.
-- search on amazon.com for the gift ideas. make sure the links are valid
-- if you are unable to find a product within the budget, provide an alternative product within the same budget range.
-- always provide 3 gift ideas
+- Provide a maximum of 3 Product Name
+- Ensure to get the latest and trending products (Current date, 12/15/2024)
+- Make sure the the product is of high quality
+- Ensure the product are actual products and not services
+
 
 The output MUST follow this exact format:
-"RecipientId: ${recipient.recipientId}":
-"Gift Ideas for ${recipient.name}: 
-1. [Gift Idea Name 1], [Gift Idea Link 1], [Gift Idea Price 1], 
-2. [Gift Idea Name 2], [Gift Idea Link 2], [Gift Idea Price 2], 
-3. [Gift Idea Name 3], [Gift Idea Link 3], [Gift Idea Price 3], 
-"
-      `;
+recipientId: ${
+        recipient.recipientId
+      }|"Product Name 1"|"Product Name 2"|"Product Name 3"
+`;
 
       const output = await model.invoke(prompt);
       suggestions.push(output.trim());
     }
 
-    const response = suggestions.map((suggestion) => suggestion);
+    // split the response into an array of strings using "|" as the delimiter
+    const splitSuggestions: [string, ...string[]][] = suggestions.map(
+      (suggestion) => suggestion.split("|") as [string, ...string[]]
+    );
 
-    return response; // Return all suggestions as an array
+    const responses = await fetchProducts(splitSuggestions);
+
+    return responses.map((response) => ({
+      recipientId: response.recipientId,
+      products: response.products.map((product) => ({
+        name: product.name,
+        query: product.query,
+        details: product.details,
+      })),
+    }));
   } catch (err) {
     console.error("Error invoking OpenAI API:", err);
     throw new Error(
