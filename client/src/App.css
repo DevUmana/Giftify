@@ -248,7 +248,7 @@ form {
 }
 
 .table .status.missing {
-  color: var(--dark-red);
+  color: var(--new-red);
   background-color: #fff;
 }
 
